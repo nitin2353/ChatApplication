@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+     <link rel="stylesheet" href="style.css">
+    <title>Chat Application</title>
+</head>
+<body>
+    <h1>Chat Here</h1>
+    <div id="all-messages">
+        <!-- <h2>hekki</h2> -->
+    </div>
+    <input type="text" id="input" placeholder="Write text here..">
+    <button id="send"><i class="bi bi-arrow-90deg-right"></i></button>
+</body>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    const socket = io();
+    const message = document.getElementById('input');
+    const btn = document.getElementById('send');
+    const div = document.getElementById('all-messages');
+
+    btn.addEventListener('click', () => {
+        socket.emit("new-message", message.value);
+        message.value = " ";
+    })
+
+    socket.on("user-message", (mess, socket) => {
+        const uid = socket;
+        const p = document.createElement("p");
+        const h6 = document.createElement("h6");
+        p.innerHTML = mess;
+        h6.innerHTML = uid;
+        div.appendChild(p);
+        p.appendChild(h6);
+    })
+
+</script>
+</html>

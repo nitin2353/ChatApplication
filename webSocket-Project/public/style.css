@@ -1,0 +1,42 @@
+body{
+    background-color: azure;
+}
+h1{
+    text-align: center;
+}
+div{
+    height: 90%;
+    width: 100%;
+    background-color: rgb(231, 220, 204);
+}
+h6{
+    display: inline-block;
+    color: red;
+    font-size: 10px;
+    float: right;
+    margin: 0px;
+    margin-right: 10px;
+    margin-top: 10px;
+}
+p{
+    font-size: 30px;
+    right: 0;
+}
+input{
+    position: fixed;
+    bottom: 0;
+    width: 90%;
+    height: 44px;
+    font-size: 20px;
+}
+button{
+    position: fixed;
+    bottom: 0;
+    width: 9%;
+    right: 0;
+    height: 50px;
+}
+
+i{
+    font-size: 25px;
+}
