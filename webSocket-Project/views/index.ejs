@@ -29,6 +29,7 @@
 
     socket.on("user-message", (mess, socket) => {
         const uid = socket;
+        console.log(socket);
         const p = document.createElement("p");
         const h6 = document.createElement("h6");
         p.innerHTML = mess;
