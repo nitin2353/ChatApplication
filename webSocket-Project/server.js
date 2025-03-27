@@ -17,8 +17,8 @@ var newUid = " ";
 
 io.on('connection', (socket) => {
     socket.on("new-message", (message) => {
-        io.emit('user-message', message, newUid);
-        // io.emit('user-message', message, socket.id);
+    
+        io.emit('user-message', message, socket.id);
     });
 });
 
