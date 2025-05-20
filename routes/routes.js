@@ -251,12 +251,16 @@ routes.get('/userprofile', (req, res) => {
 
 
 routes.post('/login', (req, res) => {
-
     const Mobile = req.body.mobile;
 
-    const query = 'SELECT * FROM users where Mobile = ?';
+    const query = 'SELECT * FROM users WHERE Mobile = ?';
 
     connection.query(query, [Mobile], (err, result) => {
+        if (err) {
+            console.error('MySQL Error:', err);  // 👈 Error log
+            return res.status(500).send('Internal Server Error');  // 👈 App crash nahi karega
+        }
+
         if (result.length > 0) {
             req.session.isAuth = true;
             req.session.mobile = Mobile;
@@ -264,12 +268,10 @@ routes.post('/login', (req, res) => {
         } else {
             req.session.mobile = Mobile;
             res.render('signup');
-
         }
+    });
+});
 
-    })
-
-})
 
 
 
