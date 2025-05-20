@@ -4,7 +4,7 @@ const connection = mysql.createConnection({
   host: 'your-railway-host.railway.app',
   port: 3306,
   user: 'root',
-  password: 'your_password',
+  password: 'nukivcTvBiTJekmQqucsKjfvxprUDWkS',
   database: 'railway_db',
 });
 
