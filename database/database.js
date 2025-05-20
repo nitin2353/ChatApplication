@@ -1,6 +1,6 @@
 const sql = require('mysql2');
 
-const connection = mysql.createConnection({
+const connection = sql.createConnection({
   host: 'your-railway-host.railway.app',
   port: 3306,
   user: 'root',
