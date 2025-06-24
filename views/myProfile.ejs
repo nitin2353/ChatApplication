@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="../images/chatimg.jpg">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <title>Profile</title>
+    <style>
+         body {
+        background-color: #201d2e;
+        overflow: hidden;
+        user-select: none;
+        color: white !important;
+    }
+    .login-container {
+        min-height: 96vh;
+        display: flex;
+        justify-content: center;
+    }
+    .login-box {
+        background: #1815255d;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        width: 100%;
+        max-width: 400px;
+        justify-content: center;
+    }
+    .login-box h1{
+        text-align: center;
+        margin-top: -15px;
+        margin-bottom: -2px;
+    }
+    .main_image{
+        height: 200px;
+        width: 200px;
+        border-radius: 50%;
+        display: flex;
+        object-fit: cover;
+        object-position: top;
+        justify-content: center;
+    }
+    input, textarea{
+        display: block;
+        height: 22px;
+        width: 100%;
+        font-size: 20px;
+        border-radius: 5px;
+        /* border: 1px solid black; */
+        border: none;
+        background-color: #35304b7e;
+        color: white;
+        /* margin-top: 30px; */
+    }
+    textarea{
+        height: 110px;
+        resize: none;
+        padding-top: 10px;
+        padding-left: 10px;
+    }
+    .bi-arrow-left-short{
+        float: inline-start;
+        cursor: pointer;
+    }
+    button{
+      margin-top: 10px;
+      height: 30px;
+      width: 130px;
+      background-color: #514d6694;
+      /* border: 1px solid white; */
+      border: none;
+      color: white;
+      border-radius: 10px;
+    }
+    .bi-camera-fill{
+        font-size: 30px;
+        margin-left: 60px;
+        margin-top: -50px;
+        position: absolute;
+        color: white;
+        cursor: pointer;
+
+        /* float: inline-end; */
+    }
+    
+
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <h1><i class="bi bi-arrow-left-short"></i>Profile</h1>
+            <hr>
+            <center><img src="" class="main_image"/><i class="bi bi-camera-fill"></i></center>
+            <form enctype="multipart/form-data">
+                    <input type="file" name="photo" id="update_image" style="display: none;" accept=".jpg,.jpeg,.png">
+                    <h1 style="margin-top: 10px; margin-bottom: -10px; font-size: 20px; opacity: 60%; font-waight: 900;" class="number"></h1>
+                    <br>
+                    <hr style="height: 2px; background-color: white; border: none;">
+                    <br>
+                    <label style="font-size: 20px; font-weight: 800;">Name :</label>
+                    <input type="text" class="name" name="name">
+                    <br>
+                    <label style="font-size: 20px; font-weight: 800;">Your About :</label>
+                    <textarea name="about" id="about">Hey there! I am using WhatsApp.</textarea>
+                    <center><button class="update">SAVE</button></center>
+            </form>
+        </div>
+      </div>
+      <script>
+            let image = document.querySelector('.main_image');
+            document.addEventListener('DOMContentLoaded', () => {
+                fetch('/userprofile')
+                .then(Response => Response.json())
+                .then(user => { 
+                    console.log(user);
+                    document.querySelector('.name').value = user.Name;
+                    document.querySelector('#about').value = user.about;
+                    document.querySelector('.number').innerHTML = user.Mobile;
+
+                    localStorage.setItem('myname', user.Name);
+                    // localStorage.setItem('mymobile', mymobile);
+                  
+                    image.src = user.DP;
+                })
+            })
+
+            document.querySelector('.bi-arrow-left-short').addEventListener('click', () => {
+                    // window.history.back();
+                    location.href = '/select';
+            })
+
+            document.querySelector('.update').addEventListener('click', async (e) => {
+
+                e.preventDefault();
+
+                let Name = document.querySelector('.name').value;
+                let Mobile = document.querySelector('.number').innerHTML; 
+                let About = document.querySelector('#about').value; 
+                let dp = document.querySelector('#update_image').files[0]; 
+                localStorage.setItem('myname', Name);
+
+                let formData = new FormData();
+                formData.append('Name', Name);
+                formData.append('Mobile', Mobile);
+                formData.append('about', About);
+                formData.append('photo', dp);
+                
+
+                await fetch('/userupdate', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(Response => Response)
+                .then(result => {
+                    console.log('Successfully updated');
+                });
+
+            });
+
+
+            let changeimage = document.querySelector('.bi-camera-fill');
+
+            
+
+            changeimage.addEventListener('click', () => {
+                document.querySelector('#update_image').click();
+            })
+
+
+            const img = document.getElementsByClassName('main_image');
+            document.querySelector('#update_image').addEventListener('change',(e) => {
+                const file = e.target.files[0];
+
+                if(file){
+                    const reader = new FileReader();
+                    
+                    reader.onload = (e) => {
+                        img[0].src = e.target.result;
+                    }
+                    reader.readAsDataURL(file);
+
+                }
+
+            })
+
+
+
+
+
+
+      </script>
+</body>
+</html>
