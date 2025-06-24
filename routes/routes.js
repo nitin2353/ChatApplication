@@ -9,7 +9,7 @@ const { brotliDecompress } = require('zlib');
 
 
 routes.use(session({
-    secret: process.env.SECRET,
+    secret: process.env.secret,
     resave: false,
     saveUninitialized: false,
     cookie: {

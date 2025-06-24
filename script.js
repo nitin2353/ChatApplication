@@ -407,7 +407,7 @@ groupbtn.addEventListener('click', (e) => {
             const userDiv = event.target.closest('.user');
             if (userDiv) {
                     userMob = userDiv.querySelector('.mob').innerText;
-                    userDiv.style="background: #E6B86A"
+                    userDiv.style="background:rgb(49, 81, 221)"
                     groupbtn.className = "bi bi-send-arrow-up"; 
                     groupuser.push(userMob);
                     console.log(groupuser);
